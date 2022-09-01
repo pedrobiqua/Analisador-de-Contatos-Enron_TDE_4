@@ -38,7 +38,9 @@ public class Grafo {
         adjacencias[i].insere(j, peso);
     }
 
-    
+    /**
+     * Monta matriz de pesos a partir da lista de adjacência
+     */
     public void matrizTempDouble() {
         for (int i = 0; i < adjacencias.length; i++) {
             for (int j = 0; j < listaVertices.size(); j++) {
@@ -53,6 +55,9 @@ public class Grafo {
         }
     }
 
+    /**
+     * Monta matriz de booleanos a partir da lista de adjacência
+     */
     public void matrizTempBoolean() {
         for (int i = 0; i < adjacencias.length; i++) {
             for (int j = 0; j < listaVertices.size(); j++) {
@@ -93,6 +98,9 @@ public class Grafo {
         }
     }
 
+    /**
+     * Metodo que aplica o algoritimo de Warshall
+     */
     public void algoritimoWarshall(){
         int k, j , i;
 
