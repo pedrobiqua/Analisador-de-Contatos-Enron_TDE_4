@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Grafo {
     ArrayList<Vertice> listaVertices;
@@ -128,6 +130,72 @@ public class Grafo {
     }
 
     /**
+     * Implementação do algortimo Dijkstra que encontra o menor caminho.
+     * @param x Vertice x.
+     * @param y Vertice y.
+     */
+    public void Dijkstra( int x, int y) {
+        // Instânciando as listas de caminho, distancia, pai e aberto.
+        List<Integer> caminhoList = new ArrayList<Integer>();
+
+        double[] distancia = new double[tamanho];
+        int[] pai = new int[tamanho];
+        boolean[] aberto = new boolean[tamanho];
+
+        // Setando as listas a serem analisadas.
+        for (int i = 0; i < tamanho; i++) {
+            if (i == x) {
+                distancia[i] = 0;
+                pai[i] = -1;
+                aberto[i] = true;
+            } else {
+                distancia[i] = infinitDouble;
+                pai[i] = -1;
+                aberto[i] = true;
+            }
+        }
+
+        while (true) {
+            double menorDistancia = infinitDouble;
+            int menorIndice = -1;
+            for (int i = 0; i < tamanho; i++) {
+                if (aberto[i] && distancia[i] < menorDistancia) {
+                    menorDistancia = distancia[i];
+                    menorIndice = i;
+                }
+            }
+
+            // Se não for achado ele sai do while
+            if (menorIndice == -1) {
+                break;
+            }
+
+            aberto[menorIndice] = false;
+            Lista adj = Adjacentes(menorIndice);
+
+            // Percorre a as adjacencias do menor indice.
+            No p = adj.primeiro;
+            while (p != null) {
+                if (distancia[menorIndice] + Peso(menorIndice, p.vertice) < distancia[p.vertice]) {
+                    distancia[p.vertice] = distancia[menorIndice] + Peso(menorIndice, p.vertice);
+                    pai[p.vertice] = menorIndice;
+                }
+                p = p.proximo;
+            }
+        }
+
+        int p = y;
+        while(p!=-1){
+            caminhoList.add(p);
+            p = pai[p];
+        }
+
+        Collections.sort(caminhoList);
+        System.out.println("A menor distancia entre "+x+" e "+y+" é: "+distancia[y]);
+        System.out.println("Caminho entre  "+x+" e "+y+" é: "+caminhoList);
+    }
+
+    /**
      * Pesquisa o peso da adjacência i com j;
      * @param i Linha
      * @param j Coluna
@@ -168,6 +236,28 @@ public class Grafo {
         }
 
         return false;
+    }
+
+    /**
+     * Metódo que entrega as adjacencias daquele vertice passado como parametro.
+     * @param i Vertice a ser analisado.
+     * @return Retorna a lista de adjacências do vertice passado como parametro.
+     */
+    public Lista Adjacentes(int i) {
+        return adjacencias[i];
+    }
+
+    public double Peso(int i, int j) {
+        No p = adjacencias[i].primeiro;
+
+        while (p != null) {
+            if (p.vertice == j) {
+                return p.peso;
+            }
+            p = p.proximo;
+        }
+
+        return infinitDouble;
     }
 
     /**

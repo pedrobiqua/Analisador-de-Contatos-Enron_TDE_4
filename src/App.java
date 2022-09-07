@@ -12,9 +12,8 @@ public class App {
         //Para criar a adj basta passar a linha e a coluna.
         grafo.cria_Adj(0, 1, 2.0);
         grafo.cria_Adj(0, 2, 2.0);
-        grafo.cria_Adj(0, 3, 2.0);
 
-        grafo.cria_Adj(1, 3, 4.0);
+        grafo.cria_Adj(1, 3, 2.0);
         grafo.cria_Adj(1, 2, 4.0);
 
         grafo.cria_Adj(2, 1, 2.0);
@@ -27,6 +26,8 @@ public class App {
 
         // Testando warshall
         // grafo.algoritimoWarshall();
+
+        grafo.Dijkstra(0, 3);
 
         System.out.println();
         

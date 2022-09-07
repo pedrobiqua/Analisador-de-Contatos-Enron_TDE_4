@@ -8,15 +8,18 @@ public class Vertice {
 
     public Vertice(int valor) {
         this.dado = valor;
-    //    AdjacenciaEntrada = new ArrayList<Adjacencia>();
-    //    AdjacenciaSaida = new ArrayList<Adjacencia>();
+
+    //---------------------------Ignore-------------------------------
+    //|    AdjacenciaEntrada = new ArrayList<Adjacencia>();           |
+    //|    AdjacenciaSaida = new ArrayList<Adjacencia>();             |
     }
 
-    //public void adicionarAdjacenciaEntrada(Adjacencia Adjacencia){
-    //    AdjacenciaEntrada.add(Adjacencia);
-    //}
+    //|public void adicionarAdjacenciaEntrada(Adjacencia Adjacencia){ |
+    //|    AdjacenciaEntrada.add(Adjacencia);                         |
+    //|}
 
-    //public void adicionarAdjacenciaSaida(Adjacencia Adjacencia){
-    //    AdjacenciaSaida.add(Adjacencia);
-    //}
+    //|public void adicionarAdjacenciaSaida(Adjacencia Adjacencia){   |
+    //|    AdjacenciaSaida.add(Adjacencia);                           |
+    //|}                                                              |
+    //---------------------------Ignore-------------------------------
 }
