@@ -3,14 +3,35 @@ import java.util.Collections;
 import java.util.List;
 
 public class Grafo {
-    ArrayList<Vertice> listaVertices;
-    Lista adjacencias[];
-    public double[][] matriz;
-    public boolean[][] matrizBoolean;
+    /**
+     * Lista de vertices do grafo, é adicionado um novo vertice no metodo cria vertice.
+     */
+    private ArrayList<Vertice> listaVertices;
 
-    Double infinitDouble = Double.MAX_VALUE;
+    /**
+     * Lista encadeada de adjacências.
+     */
+    public Lista adjacencias[];
 
-    int tamanho;
+    /**
+     * Matriz adjacência, onde convertemos a lista de adjacências para uma matriz de pesos.
+     */
+    private double[][] matriz;
+
+    /**
+     * Matriz boleana usada para o algoritimo de Warshall, onde convertemos a lista de adjacências para uma matriz de boleanos
+     */
+    private boolean[][] matrizBoolean;
+
+    /**
+     * Constante do maior número double.
+     */
+    private final Double infinitDouble = Double.MAX_VALUE;
+
+    /**
+     * Tamanho do grafo
+     */
+    private int tamanho;
 
     /**
      * Contrutor do Grafo
@@ -88,7 +109,7 @@ public class Grafo {
     }
 
     /**
-     * 
+     * Imprime a matriz
      * @param matriz Recebe uma matriz de booleanos
      */
     public void printMatriz(boolean[][] matriz) {
@@ -176,8 +197,8 @@ public class Grafo {
             // Percorre a as adjacencias do menor indice.
             No p = adj.primeiro;
             while (p != null) {
-                if (distancia[menorIndice] + Peso(menorIndice, p.vertice) < distancia[p.vertice]) {
-                    distancia[p.vertice] = distancia[menorIndice] + Peso(menorIndice, p.vertice);
+                if (distancia[menorIndice] + pesquisa_pesoAdj(menorIndice, p.vertice) < distancia[p.vertice]) {
+                    distancia[p.vertice] = distancia[menorIndice] + pesquisa_pesoAdj(menorIndice, p.vertice);
                     pai[p.vertice] = menorIndice;
                 }
                 p = p.proximo;
@@ -196,10 +217,10 @@ public class Grafo {
     }
 
     /**
-     * Pesquisa o peso da adjacência i com j;
-     * @param i Linha
-     * @param j Coluna
-     * @return
+     * Retorna o peso da adjacência i x j
+     * @param i Vertice I
+     * @param j Vertice J
+     * @return p.peso || infinitDouble
      */
     public double pesquisa_pesoAdj(int i, int j) {
 
@@ -221,7 +242,7 @@ public class Grafo {
      * Se a adjacência existir o metodo retorna true, se for falso retorna false
      * @param i Linha
      * @param j Coluna
-     * @return
+     * @return True or False
      */
     public boolean verifica_Adj(int i, int j) {
 
@@ -247,18 +268,6 @@ public class Grafo {
         return adjacencias[i];
     }
 
-    public double Peso(int i, int j) {
-        No p = adjacencias[i].primeiro;
-
-        while (p != null) {
-            if (p.vertice == j) {
-                return p.peso;
-            }
-            p = p.proximo;
-        }
-
-        return infinitDouble;
-    }
 
     /**
      * Cria um novo vertice e adiciona a lista de vertices
@@ -266,7 +275,33 @@ public class Grafo {
      */
     public void cria_Vertice(int numeroVertice){
         Vertice novoVertice = new Vertice(numeroVertice);
+        adjacencias = atualizaTamanho();
         listaVertices.add(novoVertice);
+    }
+
+    /**
+     * Atualiza o tamanho do grafo quando é criado um novo vertice
+     * @return Retorna a lista de adjacências com uma nova posição
+     */
+    private Lista[] atualizaTamanho() {
+        tamanho++;
+        Lista[] temp = new Lista[tamanho];
+
+        for (int i = 0; i < adjacencias.length; i++) {
+            temp[i] = adjacencias[i];
+        }
+
+        for (int i = 0; i < temp.length; i++) {
+            if (temp[i] == null) {
+                temp[i] = new Lista();
+            }
+        }
+
+        matriz = new double[tamanho][tamanho];
+        matrizBoolean = new boolean[tamanho][tamanho];
+
+        return temp;
+        
     }
 
 }
