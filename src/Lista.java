@@ -7,9 +7,9 @@ public class Lista {
     aresta = null;
   }
 
-  public void insere(int dado, Double peso) {
+  public void insere(int j, String email_j, Double peso) {
 
-    No p = new No(dado, peso);
+    No p = new No(j, email_j, peso);
 
     if (aresta != null) {
       this.aresta.proximo = p;

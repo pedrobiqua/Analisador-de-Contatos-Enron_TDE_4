@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -6,53 +7,53 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class App {
+
+    static int numeroVertice = 0;
+    static Grafo grafo = new Grafo(0);
+
     public static void main(String[] args) throws Exception {
         System.out.println("TDE 4 - Projero Colaborativo");
-
-        Grafo grafo = new Grafo(0);
-
-        grafo.cria_Vertice(0);
-        grafo.cria_Vertice(1);
-        grafo.cria_Vertice(2);
-        grafo.cria_Vertice(3);
-
-        //Para criar a adj basta passar a linha e a coluna.
-        grafo.cria_Adj(0, 1, 2.0);
-        grafo.cria_Adj(0, 2, 2.0);
-
-        grafo.cria_Adj(1, 3, 1.0);
-        grafo.cria_Adj(1, 2, 4.0);
-
-        grafo.cria_Adj(2, 1, 2.0);
-        grafo.cria_Adj(2, 3, 2.0);
-
-        grafo.cria_Adj(3, 1, 4.0);
-        grafo.cria_Adj(3, 1, 1.0);
-
-        //grafo.adjacencias = grafo.atualizaTamanho();
-
-        System.out.println();
-
-        // Testando warshall
-        // grafo.algoritimoWarshall();
 
         // Para ler arquivos
         Path path = FileSystems.getDefault().getPath("");
         String directoryName = path.toAbsolutePath().toString();
+        String diretorioEron = directoryName + "\\Amostra Enron\\Amostra Enron";
+        File directoryEron = new File(diretorioEron);
 
+        //leitor(directoryName + "\\Amostra Enron\\Amostra Enron\\giron-d\\sent\\98");
+
+        // Exemplo de como pegar o nome das pastas de um repositório
+        for (File file : directoryEron.listFiles()) {
+            if (!(file.getName().equals(".DS_Store"))) {
+                String filesInEron = diretorioEron + "\\" + file.getName() + "\\sent";
+
+                try {
+                    File fileInSentMail = new File(filesInEron);
+                    for (File fileMail : fileInSentMail.listFiles()) {
+                        //System.out.println(fileMail.getName());
+                        
+                        // Já está lendo o e-mail
+                        leitor(filesInEron + "\\" + fileMail.getName());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                    
+            }
+        }
+        
+        
         // Já está lendo o e-mail
-        //leitor(directoryName + "\\Amostra Enron\\Amostra Enron\\brawner-s\\_sent_mail\\1");
+        //leitor(diretorioEron + "\\brawner-s\\_sent_mail\\1");
 
         //Mostra o menor caminho
-        grafo.Dijkstra(0, 3);
-
-        System.out.println();
+        grafo.Dijkstra(0, 1);
 
         
     }
 
     /**
-     * Metodo que le as linhas de um texto.
+     * Metodo que lê as linhas de um texto.
      * @param path Caminho do arquivo a ser analisado
      * @throws IOException
      */
@@ -71,27 +72,47 @@ public class App {
                 boolean tagTo = false;
 
                 for (String string : separandoString) {
-                    System.out.println(string);
+                    //System.out.println(string);
 
                     // Obtem o nome do from
                     if (string.equals("From")) {
                         tagFrom = true;
                     } else if (tagFrom) {
-                        listaDeNomesFrom.add(string);
+                        if (!string.trim().equals("")) {
+                            System.out.println(string.trim());
+                            listaDeNomesFrom.add(string.trim());
+                            tagFrom = false;
+                        }
                     }
 
                     // Obtem nome do To
                     if (string.equals("To")) {
                         tagTo = true;
                     } else if (tagTo) {
-                        listaDeNomesTo.add(string);
+                        String emailsTo[] = string.split(",");
+                        for (int i = 0; i < emailsTo.length; i++) {
+                            // Verifica se vai vir string sem nada
+                            if (!emailsTo[i].trim().equals("")) {
+                                // Verifica se não não vai vir email com terminação >
+                                if (!(emailsTo[i].charAt(emailsTo[i].length()-1) == '>')) {
+                                    System.out.println(emailsTo[i].trim());
+                                    listaDeNomesTo.add(emailsTo[i].trim());
+                                }   
+                            }
+                        }
+                        break;
                     }
+                }
+                if (tagTo) {
+                    break;
                 }
 
 			} else
 				break;
 			linha = buffRead.readLine();
 		}
+
+        grafo.adicionaVerticeAoGrafoApartirDoEmail(listaDeNomesFrom, listaDeNomesTo);
 		buffRead.close();
 	}
 }
