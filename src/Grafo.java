@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+//import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -7,6 +8,8 @@ public class Grafo {
      * Lista de vertices do grafo, é adicionado um novo vertice no metodo cria vertice.
      */
     public ArrayList<Vertice> listaVertices;
+
+    public ArrayList<Integer> listaGrausSaida;
 
     /**
      * Lista encadeada de adjacências.
@@ -41,6 +44,7 @@ public class Grafo {
 
         this.tamanho = tamanho;
         listaVertices = new ArrayList<Vertice>();
+        listaGrausSaida = new ArrayList<Integer>();
         adjacencias = new Lista[tamanho];
         matriz = new double[tamanho][tamanho];
         matrizBoolean = new boolean[tamanho][tamanho];
@@ -59,6 +63,7 @@ public class Grafo {
      */
     public void cria_Adj(int i, int j, String email, Double peso) {
         adjacencias[i].insere(j, email, peso);
+        listaGrausSaida.set(i, listaGrausSaida.get(i) + 1);
     }
 
     /**
@@ -281,6 +286,7 @@ public class Grafo {
         Vertice novoVertice = new Vertice(numeroVertice, email);
         adjacencias = atualizaTamanho();
         listaVertices.add(novoVertice);
+        listaGrausSaida.add(0);
     }
 
     /**
@@ -403,4 +409,65 @@ public class Grafo {
         }
     }
 
+    //-----------------------------------------------------------------------------
+    // 2. Implemente métodos/funções para extrair as seguintes informações gerais:
+
+    /**
+     * O n. de vértices do grafo
+     */
+    public void NumeroDeVerticesDoGrafo() {
+        System.out.println("Número de vertices do grafo: " + listaVertices.size());
+    }
+
+    /**
+     * O n. de arestas do grafo
+     */
+    public void NumeroDeArestasDoGrafo() {
+        int contador = 0;
+        for (int i = 0; i < listaVertices.size(); i++) {
+            No p = adjacencias[i].primeiro;
+            // percorre a lista do vertice i;
+            while (p != null) {
+                contador++;
+                p = p.proximo;
+            }   
+        }
+
+        System.out.println("Número de arestas do grafo: " + contador);
+    }
+
+    /**
+     * Os  20  indivíduos  que  possuem  maior  grau  de  saída  e  o  valor.
+     */
+    public void VinteIndividuosMaiorGrauSaida() {
+        ArrayList<Integer> topVinte = new ArrayList<Integer>();
+        int contador = 1;
+
+        for (int i = 0; i < listaGrausSaida.size(); i++) {
+            topVinte.add(listaGrausSaida.get(i));
+        }
+
+        Collections.sort(topVinte, Collections.reverseOrder());
+
+        // Buscar indices dos vertices
+        System.out.println("Top 20 maiores graus de saida");
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < listaGrausSaida.size(); j++) {
+                if (topVinte.get(i) == listaGrausSaida.get(j)) {
+                    System.out.println(contador + ": " + listaVertices.get(j).email);
+                    contador++;
+                    break;
+                }
+            }
+        }
+    }
+
+    
+    /**
+     * Os 20 indivíduos que possuem maior grau de entrada e o valor correspondente.
+     */
+    public void VinteIndividuosMaiorGrauEntrada() {
+        
+    }
+    //-----------------------------------------------------------------------------
 }

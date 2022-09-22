@@ -20,8 +20,6 @@ public class App {
         String diretorioEron = directoryName + "\\Amostra Enron\\Amostra Enron";
         File directoryEron = new File(diretorioEron);
 
-        //leitor(directoryName + "\\Amostra Enron\\Amostra Enron\\giron-d\\sent\\98");
-
         // Exemplo de como pegar o nome das pastas de um repositório
         for (File file : directoryEron.listFiles()) {
             if (!(file.getName().equals(".DS_Store"))) {
@@ -32,22 +30,36 @@ public class App {
                     for (File fileMail : fileInSentMail.listFiles()) {
                         //System.out.println(fileMail.getName());
                         
-                        // Já está lendo o e-mail
                         leitor(filesInEron + "\\" + fileMail.getName());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                    
             }
         }
-        
-        
-        // Já está lendo o e-mail
-        //leitor(diretorioEron + "\\brawner-s\\_sent_mail\\1");
 
-        //Mostra o menor caminho
-        grafo.Dijkstra(0, 1);
+        /*
+        Implemente métodos/funções para extrair as seguintes 
+        informações gerais:
+        a. (0.25 ponto) O n. de vértices do grafo
+        b. (0.25 ponto) O n. de arestas do grafo
+        c. (0.25  ponto)  Os  20  indivíduos  que  possuem  maior  grau  de  saída  e  o  valor 
+        correspondente;
+        d. (0.25 ponto) Os 20 indivíduos que possuem maior grau de entrada e o valor 
+        correspondente;
+        */
+
+        // a. (0.25 ponto) O n. de vértices do grafo.
+        grafo.NumeroDeVerticesDoGrafo();
+
+        // b. (0.25 ponto) O n. de arestas do grafo.
+        grafo.NumeroDeArestasDoGrafo();
+
+        // c. (0.25  ponto)  Os  20  indivíduos  que  possuem  maior  grau  de  saída  e  o  valor correspondente.
+        // obs: Preciso mudar a lógica, pois não está 100% correto
+        grafo.VinteIndividuosMaiorGrauSaida();
+
+        // d. (0.25 ponto) Os 20 indivíduos que possuem maior grau de entrada e o valor correspondente;
 
         
     }
