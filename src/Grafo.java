@@ -377,6 +377,22 @@ public class Grafo {
     }
     */
 
+    /*public int[] adjacentes(int i) {
+		int[] adj = new int[tamanho]; // criamos uma lista adj com o peso do grafo
+
+		for(int x = 0; x < tamanho; x++){ // percorre toda a lista
+			adj[x] = -1; // adiciona o valor de -1 a todos os index
+		}
+		Lista l = grafo[i]; // lista adj recebe o index do grafo
+		int x = 0;
+		while(l != null){ // enquanto o while for diferente de null
+			adj[x] = l.destino; // alocamos o destino na lista adj
+			l = l.proximo; // pegamos o proximo elemento
+			x++; //concatenamos
+		}
+		return adj; //retornamos a lista adj
+	}*/
+
     public void buscaProfundidade(int atual, int destino, ArrayList<Integer> caminho){
 		if(!caminho.contains(atual)){ //se o atual nao consta no caminho
 			caminho.add(atual); // adicionamos o atual no caminho
@@ -393,8 +409,12 @@ public class Grafo {
 		No p = adj.primeiro;
             while (p != null) {
                 System.out.println(p.vertice);
+                buscaProfundidade(i, destino, caminho); // chamamos a função recursiva
+                if(caminho.contains(destino)){ // verifica se o destino ja esta dentro do caminho
+                    break; // paramos
                 p = p.proximo;
             }
+        
 
 		/*for(int i = 0; i < adj.size(); ){ // percorre a lista adj que foi criada
 			if(!caminho.contains(i)){ // seo i nao estiver no caminho
