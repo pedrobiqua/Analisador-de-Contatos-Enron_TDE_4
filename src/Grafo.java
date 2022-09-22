@@ -377,6 +377,38 @@ public class Grafo {
     }
     */
 
+    public void buscaProfundidade(int atual, int destino, ArrayList<Integer> caminho){
+		if(!caminho.contains(atual)){ //se o atual nao consta no caminho
+			caminho.add(atual); // adicionamos o atual no caminho
+		}
+
+        if(atual == destino){ // caso o atual seja igual ao destino (ordem de parada)
+			System.out.println("Caminho: ");// print
+			for(int i = 0; i < caminho.size(); i++){
+				System.out.println(listaVertices.get(caminho.get(i)).email+" "); // printa todo o caminho ate chegar no destino
+			}
+		}
+        Lista adj = Adjacentes(atual); // cria uma lista adj
+
+		No p = adj.primeiro;
+            while (p != null) {
+                System.out.println(p.vertice);
+                p = p.proximo;
+            }
+
+		/*for(int i = 0; i < adj.size(); ){ // percorre a lista adj que foi criada
+			if(!caminho.contains(i)){ // seo i nao estiver no caminho
+				if(i == -1){ // se o i for igual ao -1
+					break; // paramos
+				}
+				buscaProfundidade(i, destino, caminho); // chamamos a função recursiva
+				if(caminho.contains(destino)){ // verifica se o destino ja esta dentro do caminho
+					break; // paramos
+				}
+			}
+		}*/
+	}
+
     public void adicionaVerticeAoGrafoApartirDoEmail(ArrayList<String> emailsFrom, ArrayList<String> emailsTo) {
         for (int i = 0; i < emailsFrom.size(); i++) {
 
