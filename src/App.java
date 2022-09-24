@@ -20,7 +20,6 @@ public class App {
         String diretorioEron = directoryName + "\\Amostra Enron\\Amostra Enron";
         File directoryEron = new File(diretorioEron);
 
-        // Exemplo de como pegar o nome das pastas de um repositório
         for (File file : directoryEron.listFiles()) {
             if (!(file.getName().equals(".DS_Store"))) {
                 String filesInEron = diretorioEron + "\\" + file.getName() + "\\sent";
@@ -38,15 +37,33 @@ public class App {
             }
         }
 
+        // Preciso deixar isso mais eficiente fazer a mesma coisa duas vezes não p
+        for (File file : directoryEron.listFiles()) {
+            if (!(file.getName().equals(".DS_Store"))) {
+                String filesInEron = diretorioEron + "\\" + file.getName() + "\\_sent_mail";
+
+                try {
+                    File fileInSentMail = new File(filesInEron);
+                    for (File fileMail : fileInSentMail.listFiles()) {
+                        //System.out.println(fileMail.getName());
+                        
+                        leitor(filesInEron + "\\" + fileMail.getName());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         /*
         Implemente métodos/funções para extrair as seguintes 
         informações gerais:
-        a. (0.25 ponto) O n. de vértices do grafo
-        b. (0.25 ponto) O n. de arestas do grafo
-        c. (0.25  ponto)  Os  20  indivíduos  que  possuem  maior  grau  de  saída  e  o  valor 
-        correspondente;
-        d. (0.25 ponto) Os 20 indivíduos que possuem maior grau de entrada e o valor 
-        correspondente;
+            a. (0.25 ponto) O n. de vértices do grafo
+            b. (0.25 ponto) O n. de arestas do grafo
+            c. (0.25  ponto)  Os  20  indivíduos  que  possuem  maior  grau  de  saída  e  o  valor 
+            correspondente;
+            d. (0.25 ponto) Os 20 indivíduos que possuem maior grau de entrada e o valor 
+            correspondente;
         */
 
         // a. (0.25 ponto) O n. de vértices do grafo.
@@ -56,10 +73,17 @@ public class App {
         grafo.NumeroDeArestasDoGrafo();
 
         // c. (0.25  ponto)  Os  20  indivíduos  que  possuem  maior  grau  de  saída  e  o  valor correspondente.
-        // obs: Preciso mudar a lógica, pois não está 100% correto
         grafo.VinteIndividuosMaiorGrauSaida();
 
-        // d. (0.25 ponto) Os 20 indivíduos que possuem maior grau de entrada e o valor correspondente;
+        // d. (0.25 ponto) Os 20 indivíduos que possuem maior grau de entrada e o valor correspondente.
+        grafo.VinteIndividuosMaiorGrauEntrada();
+
+        // Mostrar caminho para chegar de um vertice X para um Y
+        grafo.Dijkstra(0, 25);
+
+        // Para o outro tenho que mostrar o inverso do dijkstra
+        grafo.DijkstraMaiorCaminho(0, 25);
+
 
         
     }
