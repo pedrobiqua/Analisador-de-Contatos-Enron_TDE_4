@@ -392,46 +392,12 @@ public class Grafo {
         
     }
 
-    /*
-    Montar a busca em profundidade e busca em largura
-    // Nesse exemplo de código precisa criar o visitados, o percArv
-    public void buscaProfundidade(int raiz) {
-        percArv.add(raiz);
-
-        visitados[raiz] = true;  
-
-        int i;  
-        for (i = 0; i < listaVertices.size(); i++) { 
-            // Montar a matriz adjacência, oq temos hoje é uma matriz de pesos
-            if (matriz[raiz][i] != 0 && visitados[i] == false) {
-                buscaProfundidade(i); 
-                percArv.add(raiz); 
-            }  
-        }
-    }
-
-    // Precisa pesquisar ainda
-    public void buscaLargura() {
-        
-    }
-    */
-
-    /*public int[] adjacentes(int i) {
-		int[] adj = new int[tamanho]; // criamos uma lista adj com o peso do grafo
-
-		for(int x = 0; x < tamanho; x++){ // percorre toda a lista
-			adj[x] = -1; // adiciona o valor de -1 a todos os index
-		}
-		Lista l = grafo[i]; // lista adj recebe o index do grafo
-		int x = 0;
-		while(l != null){ // enquanto o while for diferente de null
-			adj[x] = l.destino; // alocamos o destino na lista adj
-			l = l.proximo; // pegamos o proximo elemento
-			x++; //concatenamos
-		}
-		return adj; //retornamos a lista adj
-	}*/
-
+    /**
+     * Metódo de busca em profundidade.
+     * @param atual vertice atual
+     * @param destino vertice a ser buscado
+     * @param caminho ArrayList de inteiros para montar o caminho
+     */
     public void buscaProfundidade(int atual, int destino, ArrayList<Integer> caminho){
         if(!caminho.contains(atual)){ 
             // vértice atual será adicionado ao caminho
@@ -462,6 +428,11 @@ public class Grafo {
 		}
 	}
 
+    /**
+     * A adiciona vertice no grafo utilizando e-mail como ponte.
+     * @param emailsFrom
+     * @param emailsTo
+     */
     public void adicionaVerticeAoGrafoApartirDoEmail(ArrayList<String> emailsFrom, ArrayList<String> emailsTo) {
         for (int i = 0; i < emailsFrom.size(); i++) {
 
@@ -525,10 +496,6 @@ public class Grafo {
      * Os  20  indivíduos  que  possuem  maior  grau  de  saída  e  o  valor.
      */
     public void VinteIndividuosMaiorGrauSaida() {
-        // Falta adicionar os vertices visitados para não repitir o top 20
-        /*
-        
-        */
         ArrayList<Integer> visitados = new ArrayList<Integer>();
         ArrayList<Integer> topVinte = new ArrayList<Integer>();
         int contador = 1;
