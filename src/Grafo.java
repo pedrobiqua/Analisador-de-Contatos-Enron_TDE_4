@@ -277,6 +277,17 @@ public class Grafo {
         return adjacencias[i];
     }
 
+    public int[] adjacentesInt(int i) {
+        int[] adjacentes = new int[listaVertices.size()];
+        No p = adjacencias[i].primeiro;
+        int j = 0;
+        while (p != null) {
+            adjacentes[j] = p.vertice;           
+            p = p.proximo;
+            j++;
+        }
+        return adjacentes;
+    }
 
     /**
      * Cria um novo vertice e adiciona a lista de vertices
@@ -394,29 +405,23 @@ public class Grafo {
 	}*/
 
     public void buscaProfundidade(int atual, int destino, ArrayList<Integer> caminho){
-		if(!caminho.contains(atual)){ //se o atual nao consta no caminho
-			caminho.add(atual); // adicionamos o atual no caminho
+        if(!caminho.contains(atual)){ 
+            // vértice atual será adicionado ao caminho
+			caminho.add(atual); 
 		}
 
-        if(atual == destino){ // caso o atual seja igual ao destino (ordem de parada)
-			System.out.println("Caminho: ");// print
+         //se o vértice atual for igual ao destino
+		if(atual == destino){
+            System.out.println("\n\n\n\n\n\n\n\n");
+			System.out.println("Caminho: ");
 			for(int i = 0; i < caminho.size(); i++){
-				System.out.println(listaVertices.get(caminho.get(i)).email+" "); // printa todo o caminho ate chegar no destino
+                //agora, printaremos o caminho
+				System.out.println(listaVertices.get(caminho.get(i)).dado + ": " + listaVertices.get(caminho.get(i)).email + " ");
 			}
 		}
-        Lista adj = Adjacentes(atual); // cria uma lista adj
 
-		No p = adj.primeiro;
-            while (p != null) {
-                System.out.println(p.vertice);
-                buscaProfundidade(i, destino, caminho); // chamamos a função recursiva
-                if(caminho.contains(destino)){ // verifica se o destino ja esta dentro do caminho
-                    break; // paramos
-                p = p.proximo;
-            }
-        
-
-		/*for(int i = 0; i < adj.size(); ){ // percorre a lista adj que foi criada
+		int[] adj = adjacentesInt(atual); // cria uma lista adj
+		for(int i : adj){ // percorre a lista adj que foi criada
 			if(!caminho.contains(i)){ // seo i nao estiver no caminho
 				if(i == -1){ // se o i for igual ao -1
 					break; // paramos
@@ -426,7 +431,7 @@ public class Grafo {
 					break; // paramos
 				}
 			}
-		}*/
+		}
 	}
 
     public void adicionaVerticeAoGrafoApartirDoEmail(ArrayList<String> emailsFrom, ArrayList<String> emailsTo) {

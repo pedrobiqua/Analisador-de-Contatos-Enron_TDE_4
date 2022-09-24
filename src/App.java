@@ -12,13 +12,14 @@ public class App {
     static Grafo grafo = new Grafo(0);
 
     public static void main(String[] args) throws Exception {
-        System.out.println("TDE 4 - Projero Colaborativo");
+        System.out.println("TDE 4 - Projeyo Colaborativo");
 
         // Para ler arquivos
         Path path = FileSystems.getDefault().getPath("");
         String directoryName = path.toAbsolutePath().toString();
         String diretorioEron = directoryName + "\\Amostra Enron\\Amostra Enron";
         File directoryEron = new File(diretorioEron);
+        ArrayList<Integer> caminho = new ArrayList<>();
 
         // Exemplo de como pegar o nome das pastas de um repositório
         for (File file : directoryEron.listFiles()) {
@@ -50,18 +51,18 @@ public class App {
         */
 
         // a. (0.25 ponto) O n. de vértices do grafo.
-        grafo.NumeroDeVerticesDoGrafo();
+        //grafo.NumeroDeVerticesDoGrafo();
 
         // b. (0.25 ponto) O n. de arestas do grafo.
-        grafo.NumeroDeArestasDoGrafo();
+        //grafo.NumeroDeArestasDoGrafo();
 
         // c. (0.25  ponto)  Os  20  indivíduos  que  possuem  maior  grau  de  saída  e  o  valor correspondente.
         // obs: Preciso mudar a lógica, pois não está 100% correto
-        grafo.VinteIndividuosMaiorGrauSaida();
+        //grafo.VinteIndividuosMaiorGrauSaida();
 
         // d. (0.25 ponto) Os 20 indivíduos que possuem maior grau de entrada e o valor correspondente;
 
-        
+        grafo.buscaProfundidade(44, 0, caminho);
     }
 
     /**
@@ -91,7 +92,7 @@ public class App {
                         tagFrom = true;
                     } else if (tagFrom) {
                         if (!string.trim().equals("")) {
-                            System.out.println(string.trim());
+                            //System.out.println(string.trim());
                             listaDeNomesFrom.add(string.trim());
                             tagFrom = false;
                         }
@@ -107,7 +108,7 @@ public class App {
                             if (!emailsTo[i].trim().equals("")) {
                                 // Verifica se não não vai vir email com terminação >
                                 if (!(emailsTo[i].charAt(emailsTo[i].length()-1) == '>')) {
-                                    System.out.println(emailsTo[i].trim());
+                                    //System.out.println(emailsTo[i].trim());
                                     listaDeNomesTo.add(emailsTo[i].trim());
                                 }   
                             }
@@ -127,4 +128,5 @@ public class App {
         grafo.adicionaVerticeAoGrafoApartirDoEmail(listaDeNomesFrom, listaDeNomesTo);
 		buffRead.close();
 	}
+
 }
