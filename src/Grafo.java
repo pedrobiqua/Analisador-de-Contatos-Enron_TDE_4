@@ -9,7 +9,15 @@ public class Grafo {
      */
     public ArrayList<Vertice> listaVertices;
 
+    /**
+     * Lista de graus de saida, onde o indice é representado pelo vertice.
+     */
     public ArrayList<Integer> listaGrausSaida;
+
+    /**
+     * Lista de graus de entrada, onde o indice é representado pelo vertice.
+     */
+    public ArrayList<Integer> listaGrausEntrada;
 
     /**
      * Lista encadeada de adjacências.
@@ -36,6 +44,8 @@ public class Grafo {
      */
     private int tamanho;
 
+    int vertice;
+
     /**
      * Contrutor do Grafo
      * @param tamanho Tamanho do grafo, onde será o total de vertices  i x j
@@ -45,6 +55,7 @@ public class Grafo {
         this.tamanho = tamanho;
         listaVertices = new ArrayList<Vertice>();
         listaGrausSaida = new ArrayList<Integer>();
+        listaGrausEntrada = new ArrayList<Integer>();
         adjacencias = new Lista[tamanho];
         matriz = new double[tamanho][tamanho];
         matrizBoolean = new boolean[tamanho][tamanho];
@@ -64,6 +75,7 @@ public class Grafo {
     public void cria_Adj(int i, int j, String email, Double peso) {
         adjacencias[i].insere(j, email, peso);
         listaGrausSaida.set(i, listaGrausSaida.get(i) + 1);
+        listaGrausEntrada.set(j, listaGrausEntrada.get(j) + 1);
     }
 
     /**
@@ -298,6 +310,7 @@ public class Grafo {
         adjacencias = atualizaTamanho();
         listaVertices.add(novoVertice);
         listaGrausSaida.add(0);
+        listaGrausEntrada.add(0);
     }
 
     /**
@@ -325,6 +338,11 @@ public class Grafo {
         
     }
 
+    /**
+     * Verifica se existe o vertice
+     * @param i
+     * @return true ou false
+     */
     public boolean verifica_Vertice(int i) {
         for (int j = 0; j < listaVertices.size(); j++) {
             if (listaVertices.get(j).dado == i) {
@@ -334,6 +352,11 @@ public class Grafo {
         return false;
     }
 
+    /**
+     * Atualiza o peso quando já existe a adjacência
+     * @param i vertice i 
+     * @param j vertice j adjacênte a i
+     */
     public void atualizaPeso(int i, int j) {
 
         No p = adjacencias[i].primeiro;
@@ -347,6 +370,11 @@ public class Grafo {
         }
     }
 
+    /**
+     * Busca o vertice a partir do email, 
+     * @param email email usado como referência para a busca
+     * @return retorna o numero do vertice correspondente ao enviado por e-mail
+     */
     public int buscaVerticeApartirDaString(String email) {
 
         for (int i = 0; i < listaVertices.size(); i++) {
@@ -364,46 +392,12 @@ public class Grafo {
         
     }
 
-    /*
-    Montar a busca em profundidade e busca em largura
-    // Nesse exemplo de código precisa criar o visitados, o percArv
-    public void buscaProfundidade(int raiz) {
-        percArv.add(raiz);
-
-        visitados[raiz] = true;  
-
-        int i;  
-        for (i = 0; i < listaVertices.size(); i++) { 
-            // Montar a matriz adjacência, oq temos hoje é uma matriz de pesos
-            if (matriz[raiz][i] != 0 && visitados[i] == false) {
-                buscaProfundidade(i); 
-                percArv.add(raiz); 
-            }  
-        }
-    }
-
-    // Precisa pesquisar ainda
-    public void buscaLargura() {
-        
-    }
-    */
-
-    /*public int[] adjacentes(int i) {
-		int[] adj = new int[tamanho]; // criamos uma lista adj com o peso do grafo
-
-		for(int x = 0; x < tamanho; x++){ // percorre toda a lista
-			adj[x] = -1; // adiciona o valor de -1 a todos os index
-		}
-		Lista l = grafo[i]; // lista adj recebe o index do grafo
-		int x = 0;
-		while(l != null){ // enquanto o while for diferente de null
-			adj[x] = l.destino; // alocamos o destino na lista adj
-			l = l.proximo; // pegamos o proximo elemento
-			x++; //concatenamos
-		}
-		return adj; //retornamos a lista adj
-	}*/
-
+    /**
+     * Metódo de busca em profundidade.
+     * @param atual vertice atual
+     * @param destino vertice a ser buscado
+     * @param caminho ArrayList de inteiros para montar o caminho
+     */
     public void buscaProfundidade(int atual, int destino, ArrayList<Integer> caminho){
         if(!caminho.contains(atual)){ 
             // vértice atual será adicionado ao caminho
@@ -483,6 +477,11 @@ public class Grafo {
 		}
 	}
 
+    /**
+     * A adiciona vertice no grafo utilizando e-mail como ponte.
+     * @param emailsFrom
+     * @param emailsTo
+     */
     public void adicionaVerticeAoGrafoApartirDoEmail(ArrayList<String> emailsFrom, ArrayList<String> emailsTo) {
         for (int i = 0; i < emailsFrom.size(); i++) {
 
@@ -519,14 +518,14 @@ public class Grafo {
     // 2. Implemente métodos/funções para extrair as seguintes informações gerais:
 
     /**
-     * O n. de vértices do grafo
+     * O número de vértices do grafo
      */
     public void NumeroDeVerticesDoGrafo() {
         System.out.println("Número de vertices do grafo: " + listaVertices.size());
     }
 
     /**
-     * O n. de arestas do grafo
+     * O número de arestas do grafo
      */
     public void NumeroDeArestasDoGrafo() {
         int contador = 0;
@@ -546,6 +545,7 @@ public class Grafo {
      * Os  20  indivíduos  que  possuem  maior  grau  de  saída  e  o  valor.
      */
     public void VinteIndividuosMaiorGrauSaida() {
+        ArrayList<Integer> visitados = new ArrayList<Integer>();
         ArrayList<Integer> topVinte = new ArrayList<Integer>();
         int contador = 1;
 
@@ -556,16 +556,28 @@ public class Grafo {
         Collections.sort(topVinte, Collections.reverseOrder());
 
         // Buscar indices dos vertices
-        System.out.println("Top 20 maiores graus de saida");
+        System.out.println("\nTop 20 maiores graus de saida");
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < listaGrausSaida.size(); j++) {
                 if (topVinte.get(i) == listaGrausSaida.get(j)) {
-                    System.out.println(contador + ": " + listaVertices.get(j).email);
-                    contador++;
-                    break;
+                    if (verificaVisitado(visitados, j)) {
+                        System.out.println(contador + ": " + listaVertices.get(j).email);
+                        visitados.add(j);
+                        contador++;
+                        break;
+                    }
                 }
             }
         }
+    }
+
+    public boolean verificaVisitado(ArrayList<Integer> visitados, int verticeAnalisado) {
+        for (int i = 0; i < visitados.size(); i++) {
+            if (visitados.get(i) == verticeAnalisado) {
+                return false;
+            }
+        }
+        return true;
     }
 
     
@@ -573,7 +585,103 @@ public class Grafo {
      * Os 20 indivíduos que possuem maior grau de entrada e o valor correspondente.
      */
     public void VinteIndividuosMaiorGrauEntrada() {
-        
+        ArrayList<Integer> visitados = new ArrayList<Integer>();
+        ArrayList<Integer> topVinte = new ArrayList<Integer>();
+        int contador = 1;
+
+        for (int i = 0; i < listaGrausEntrada.size(); i++) {
+            topVinte.add(listaGrausEntrada.get(i));
+        }
+
+        Collections.sort(topVinte, Collections.reverseOrder());
+
+        // Buscar indices dos vertices
+        System.out.println("\nTop 20 maiores graus de entrada");
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < listaGrausEntrada.size(); j++) {
+                if (topVinte.get(i) == listaGrausEntrada.get(j)) {
+                    if (verificaVisitado(visitados, j)) {
+                        System.out.println(contador + ": " + listaVertices.get(j).email);
+                        visitados.add(j);
+                        contador++;
+                        break;
+                    }
+                }
+            }
+        }
     }
     //-----------------------------------------------------------------------------
+
+    // Falta fazer o menor caminho entre dois pontos
+    /**
+     * Implementação do algortimo Dijkstra que encontra o maior caminho.
+     * @param x Vertice x.
+     * @param y Vertice y.
+     */
+    public void DijkstraMaiorCaminho( int x, int y) {
+        if (x < 0 || y > adjacencias.length) {
+            System.out.println("Não é possivel fazer o Dijkstra");
+        } else {
+            // Instânciando as listas de caminho, distancia, pai e aberto.
+            List<Integer> caminhoList = new ArrayList<Integer>();
+
+            double[] distancia = new double[tamanho];
+            int[] pai = new int[tamanho];
+            boolean[] aberto = new boolean[tamanho];
+
+            // Setando as listas a serem analisadas.
+            for (int i = 0; i < tamanho; i++) {
+                if (i == x) {
+                    distancia[i] = 0;
+                    pai[i] = -1;
+                    aberto[i] = true;
+                } else {
+                    distancia[i] = infinitDouble;
+                    pai[i] = -1;
+                    aberto[i] = true;
+                }
+            }
+
+            while (true) {
+                double maiorDistancia = infinitDouble;
+                int menorIndice = -1;
+                for (int i = 0; i < tamanho; i++) {
+                    if (aberto[i] && distancia[i] > maiorDistancia) {
+                        maiorDistancia = distancia[i];
+                        menorIndice = i;
+                    }
+                }
+
+                // Se não for achado ele sai do while
+                if (menorIndice == -1) {
+                    break;
+                }
+
+                aberto[menorIndice] = false;
+                Lista adj = Adjacentes(menorIndice);
+
+                // Percorre a as adjacencias do menor indice.
+                No p = adj.primeiro;
+                while (p != null) {
+                    if (distancia[menorIndice] + pesquisa_pesoAdj(menorIndice, p.vertice) > distancia[p.vertice]) {
+                        distancia[p.vertice] = distancia[menorIndice] + pesquisa_pesoAdj(menorIndice, p.vertice);
+                        pai[p.vertice] = menorIndice;
+                    }
+                    p = p.proximo;
+                }
+            }
+
+            int p = y;
+            while(p!=-1) {
+                caminhoList.add(p);
+                p = pai[p];
+            }
+
+            Collections.sort(caminhoList);
+            System.out.println("A menor distancia entre "+x+" e "+y+" é: "+distancia[y]);
+            System.out.println("Caminho entre  "+x+" e "+y+" é: "+caminhoList);
+        }        
+    }
+
+
 }
