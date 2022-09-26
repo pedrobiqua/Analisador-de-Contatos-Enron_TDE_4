@@ -62,7 +62,8 @@ public class App {
 
         // d. (0.25 ponto) Os 20 indivíduos que possuem maior grau de entrada e o valor correspondente;
 
-        grafo.buscaProfundidade(44, 0, caminho);
+        //grafo.buscaProfundidade(44, 0, caminho);
+        grafo.buscaLargura(44, 0, caminho);
     }
 
     /**

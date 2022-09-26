@@ -415,20 +415,69 @@ public class Grafo {
             System.out.println("\n\n\n\n\n\n\n\n");
 			System.out.println("Caminho: ");
 			for(int i = 0; i < caminho.size(); i++){
-                //agora, printaremos o caminho
+                // agora, printaremos o caminho
 				System.out.println(listaVertices.get(caminho.get(i)).dado + ": " + listaVertices.get(caminho.get(i)).email + " ");
 			}
 		}
 
-		int[] adj = adjacentesInt(atual); // cria uma lista adj
-		for(int i : adj){ // percorre a lista adj que foi criada
-			if(!caminho.contains(i)){ // seo i nao estiver no caminho
-				if(i == -1){ // se o i for igual ao -1
-					break; // paramos
+		int[] adj = adjacentesInt(atual);
+		for(int i : adj){
+			if(!caminho.contains(i)){
+				if(i == -1){
+					break;
 				}
-				buscaProfundidade(i, destino, caminho); // chamamos a função recursiva
-				if(caminho.contains(destino)){ // verifica se o destino ja esta dentro do caminho
-					break; // paramos
+				buscaProfundidade(i, destino, caminho); // recursivo
+				if(caminho.contains(destino)){
+					break;
+				}
+			}
+		}
+	}
+
+    public void buscaLargura(int atual, int destino, ArrayList<Integer> caminho){
+		ArrayList<Integer> listaSaltos = new ArrayList<>(); // array para guardar os saltos
+
+		for(int i = 0; i < tamanho; i++){
+			ArrayList<Integer> visitados = new ArrayList<>();
+			saltos(atual, i, listaSaltos, visitados); // chama recursivamente o metodo saltos
+			if(listaSaltos.contains(destino)){ // verifica se o destino já esta na lista de saltos
+				break;
+			}
+		}
+        System.out.println("\n\n\n\n\n\n\n\n");
+		System.out.println("Caminho: ");
+		System.out.println(listaVertices.get(caminho.get(atual)).email + " "); // printa o email atual
+		for(int i : listaSaltos){
+			System.out.println(listaVertices.get(caminho.get(i)).email + " "); // printa o email do indíce
+			if(i == destino){ // caso o i seja igual ao destino
+				break;
+			}
+		}
+	}
+
+	public void saltos(int origem, int pulos, ArrayList<Integer> listaSaltos, ArrayList<Integer> visitados){
+		int[] adj = adjacentesInt(origem); // pegar as adjacentes da origem
+
+		if(!visitados.contains(origem)){ // verifica se a origem ja foi adicionada nos visitados
+			visitados.add(origem);
+		}
+
+		if(pulos == 1){  // criterio para adicionar um numero nos listas saltos
+			for(int i : adj){ // passar pelas adjacencias da origem
+				if(i == -1){ // checar se acabaram as adjacentes
+					break;
+				}else if(!listaSaltos.contains(i) && !visitados.contains(i)){ // adiciona a adjacência na lista
+					listaSaltos.add(i);
+				}
+			}
+		}
+		if(pulos > 1){
+			for(int i : adj){
+				if(i == -1){
+					break;
+				}
+				if(!visitados.contains(i)){
+					saltos(i, pulos - 1, listaSaltos, visitados); // chama recursivamente subtraindo 1 valor do pulo
 				}
 			}
 		}
