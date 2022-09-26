@@ -59,26 +59,26 @@ public class App {
         }
 
         // a. (0.25 ponto) O n. de vértices do grafo.
-        grafo.NumeroDeVerticesDoGrafo();
+        //grafo.NumeroDeVerticesDoGrafo();
 
         // b. (0.25 ponto) O n. de arestas do grafo.
-        grafo.NumeroDeArestasDoGrafo();
+        //grafo.NumeroDeArestasDoGrafo();
 
         // c. (0.25  ponto)  Os  20  indivíduos  que  possuem  maior  grau  de  saída  e  o  valor correspondente.
         // obs: Preciso mudar a lógica, pois não está 100% correto
-        grafo.VinteIndividuosMaiorGrauSaida();
+        //grafo.VinteIndividuosMaiorGrauSaida();
 
         // d. (0.25 ponto) Os 20 indivíduos que possuem maior grau de entrada e o valor correspondente.
-        grafo.VinteIndividuosMaiorGrauEntrada();
+        //grafo.VinteIndividuosMaiorGrauEntrada();
 
         // Mostrar caminho para chegar de um vertice X para um Y
-        grafo.Dijkstra(0, 25);
+        //grafo.Dijkstra(0, 25);
 
         // Para o outro tenho que mostrar o inverso do dijkstra
         //grafo.DijkstraMaiorCaminho(0, 25);
 
         //grafo.buscaProfundidade(44, 0, caminho);
-        grafo.buscaLargura(44, 0, caminho);
+        grafo.buscaLargura(0, 40, caminho);
     }
 
     /**

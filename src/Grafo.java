@@ -440,9 +440,9 @@ public class Grafo {
 		}
         System.out.println("\n\n\n\n\n\n\n\n");
 		System.out.println("Caminho: ");
-		System.out.println(listaVertices.get(caminho.get(atual)).email + " "); // printa o email atual
+		System.out.println(listaVertices.get(atual).dado + ": " + listaVertices.get(atual).email + " "); // printa o email atual
 		for(int i : listaSaltos){
-			System.out.println(listaVertices.get(caminho.get(i)).email + " "); // printa o email do indíce
+			System.out.println(listaVertices.get(i).dado + ": " + listaVertices.get(i).email + " "); // printa o email do indíce
 			if(i == destino){ // caso o i seja igual ao destino
 				break;
 			}
