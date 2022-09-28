@@ -23,6 +23,7 @@ public class Grafo {
      * Lista encadeada de adjacências.
      */
     public Lista adjacencias[];
+    public ArrayList<Lista> adjacenciasList;
 
     /**
      * Matriz adjacência, onde convertemos a lista de adjacências para uma matriz de pesos.
@@ -54,6 +55,7 @@ public class Grafo {
 
         this.tamanho = tamanho;
         listaVertices = new ArrayList<Vertice>();
+        adjacenciasList = new ArrayList<Lista>();
         listaGrausSaida = new ArrayList<Integer>();
         listaGrausEntrada = new ArrayList<Integer>();
         adjacencias = new Lista[tamanho];
@@ -74,6 +76,7 @@ public class Grafo {
      */
     public void cria_Adj(int i, int j, String email, Double peso) {
         adjacencias[i].insere(j, email, peso);
+        adjacenciasList.add(new Lista());
         listaGrausSaida.set(i, listaGrausSaida.get(i) + 1);
         listaGrausEntrada.set(j, listaGrausEntrada.get(j) + 1);
     }
@@ -286,6 +289,7 @@ public class Grafo {
      * @return Retorna a lista de adjacências do vertice passado como parametro.
      */
     public Lista Adjacentes(int i) {
+        adjacenciasList.get(i);
         return adjacencias[i];
     }
 
@@ -420,7 +424,8 @@ public class Grafo {
 				if(i == -1){
 					break;
 				}
-				buscaProfundidade(i, destino, caminho); // recursivo
+                // recursivo
+				buscaProfundidade(i, destino, caminho);
 				if(caminho.contains(destino)){
 					break;
 				}
@@ -429,12 +434,15 @@ public class Grafo {
 	}
 
     public void buscaLargura(int atual, int destino, ArrayList<Integer> caminho){
-		ArrayList<Integer> listaSaltos = new ArrayList<>(); // array para guardar os saltos
+        // array para guardar os saltos
+		ArrayList<Integer> listaSaltos = new ArrayList<>();
 
 		for(int i = 0; i < tamanho; i++){
 			ArrayList<Integer> visitados = new ArrayList<>();
-			saltos(atual, i, listaSaltos, visitados); // chama recursivamente o metodo saltos
-			if(listaSaltos.contains(destino)){ // verifica se o destino já esta na lista de saltos
+            // chama recursivamente o metodo saltos
+			saltos(atual, i, listaSaltos, visitados); 
+            // verifica se o destino já esta na lista de saltos
+			if(listaSaltos.contains(destino)){ 
 				break;
 			}
 		}
@@ -443,7 +451,8 @@ public class Grafo {
 		System.out.println(listaVertices.get(atual).dado + ": " + listaVertices.get(atual).email + " "); // printa o email atual
 		for(int i : listaSaltos){
 			System.out.println(listaVertices.get(i).dado + ": " + listaVertices.get(i).email + " "); // printa o email do indíce
-			if(i == destino){ // caso o i seja igual ao destino
+			// caso o i seja igual ao destino
+            if(i == destino){
 				break;
 			}
 		}
@@ -473,6 +482,50 @@ public class Grafo {
 				if(!visitados.contains(i)){
 					saltos(i, pulos - 1, listaSaltos, visitados); // chama recursivamente subtraindo 1 valor do pulo
 				}
+			}
+		}
+	}
+
+    public void distanciaXY(int atual, ArrayList<Integer> caminho, int alcance){
+        // array para guardar os saltos
+		ArrayList<Integer> listaSaltos = new ArrayList<>();
+
+		//for(int i = 0; i < alcance + 1; i++){
+            // chama recursivamente o metodo saltos
+			saltosDistancia(atual, alcance, listaSaltos, alcance); 
+            // verifica se o destino já esta na lista de saltos
+		//}
+		//System.out.println(listaVertices.get(atual).dado + ": " + listaVertices.get(atual).email + " "); // printa o email atual
+		//System.out.println(listaVertices.get(listaSaltos.size()).dado);
+        
+        for(int i : listaSaltos){
+            if (i == 0) {
+                break;
+            }
+			System.out.println(listaVertices.get(i).dado + ": " + listaVertices.get(i).email + " "); // printa o email do indíce
+		}
+        
+	}
+
+    public void saltosDistancia(int origem, int pulos, ArrayList<Integer> listaSaltos, int distancia){
+		int[] adj = adjacentesInt(origem); // pegar as adjacentes da origem
+
+		if(pulos == 1){  // criterio para adicionar um numero nos listas saltos
+			for(int i : adj){ // passar pelas adjacencias da origem
+				if(i == -1 ){ // checar se acabaram as adjacentes
+					break;
+				}else {
+					listaSaltos.add(i);
+				}
+			}
+		}
+		if(pulos > 1){
+			for(int i : adj){
+				if(i == -1){
+					break;
+				} else {
+                    saltosDistancia(i, pulos - 1, listaSaltos, distancia);
+                }
 			}
 		}
 	}
@@ -610,7 +663,6 @@ public class Grafo {
             }
         }
     }
-    //-----------------------------------------------------------------------------
 
     // Falta fazer o menor caminho entre dois pontos
     /**
@@ -646,7 +698,7 @@ public class Grafo {
                 double maiorDistancia = infinitDouble;
                 int menorIndice = -1;
                 for (int i = 0; i < tamanho; i++) {
-                    if (aberto[i] && distancia[i] > maiorDistancia) {
+                    if (aberto[i] && distancia[i] < maiorDistancia) {
                         maiorDistancia = distancia[i];
                         menorIndice = i;
                     }
@@ -663,8 +715,8 @@ public class Grafo {
                 // Percorre a as adjacencias do menor indice.
                 No p = adj.primeiro;
                 while (p != null) {
-                    if (distancia[menorIndice] + pesquisa_pesoAdj(menorIndice, p.vertice) > distancia[p.vertice]) {
-                        distancia[p.vertice] = distancia[menorIndice] + pesquisa_pesoAdj(menorIndice, p.vertice);
+                    if (distancia[menorIndice] + (1/pesquisa_pesoAdj(menorIndice, p.vertice)) < distancia[p.vertice]) {
+                        distancia[p.vertice] = distancia[menorIndice] + (1/pesquisa_pesoAdj(menorIndice, p.vertice));
                         pai[p.vertice] = menorIndice;
                     }
                     p = p.proximo;
@@ -678,7 +730,6 @@ public class Grafo {
             }
 
             Collections.sort(caminhoList);
-            System.out.println("A menor distancia entre "+x+" e "+y+" é: "+distancia[y]);
             System.out.println("Caminho entre  "+x+" e "+y+" é: "+caminhoList);
         }        
     }

@@ -58,7 +58,27 @@ public class App {
             }
         }
 
-        // a. (0.25 ponto) O n. de vértices do grafo.
+        Grafo grafoTeste = new Grafo(0);
+
+        grafoTeste.cria_Vertice(0, "aaaaaa");
+        grafoTeste.cria_Vertice(1, "aaaaaa");
+        grafoTeste.cria_Vertice(2, "aaaaaa");
+        grafoTeste.cria_Vertice(3, "aaaaaa");
+        grafoTeste.cria_Vertice(4, "aaaaaa");
+        grafoTeste.cria_Vertice(5, "aaaaaa");
+
+        grafoTeste.cria_Adj(0, 1, "aaaaaaa", 5.0);
+        grafoTeste.cria_Adj(0, 2, "aaaaaaa", 2.0);
+        grafoTeste.cria_Adj(0, 3, "aaaaaaa", 1.0);
+
+        grafoTeste.cria_Adj(1, 4, "aaaaaaa", 5.0);
+        grafoTeste.cria_Adj(2, 4, "aaaaaaa", 1.0);
+        grafoTeste.cria_Adj(3, 4, "aaaaaaa", 2.0);
+
+        grafoTeste.DijkstraMaiorCaminho(0, 4);
+
+        grafoTeste.distanciaXY(0, caminho, 1);
+        //a. (0.25 ponto) O n. de vértices do grafo.
         //grafo.NumeroDeVerticesDoGrafo();
 
         // b. (0.25 ponto) O n. de arestas do grafo.
@@ -75,10 +95,12 @@ public class App {
         //grafo.Dijkstra(0, 25);
 
         // Para o outro tenho que mostrar o inverso do dijkstra
-        //grafo.DijkstraMaiorCaminho(0, 25);
+        //grafo.DijkstraMaiorCaminho(0, 44);
 
         //grafo.buscaProfundidade(44, 0, caminho);
-        grafo.buscaLargura(0, 40, caminho);
+        //grafo.buscaLargura(0, 40, caminho);
+
+
     }
 
     /**
