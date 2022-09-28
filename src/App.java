@@ -19,6 +19,7 @@ public class App {
         String directoryName = path.toAbsolutePath().toString();
         String diretorioEron = directoryName + "\\Amostra Enron\\Amostra Enron";
         File directoryEron = new File(diretorioEron);
+        
         ArrayList<Integer> caminho = new ArrayList<>();
 
         for (File file : directoryEron.listFiles()) {
