@@ -78,7 +78,8 @@ public class App {
 
         grafoTeste.DijkstraMaiorCaminho(0, 4);
 
-        grafoTeste.distanciaXY(0, caminho, 1);
+        grafoTeste.distanciaXY(0, caminho, 2);
+        //grafoTeste.NumeroDeArestasDoGrafo();
         //a. (0.25 ponto) O n. de vértices do grafo.
         //grafo.NumeroDeVerticesDoGrafo();
 
@@ -96,7 +97,7 @@ public class App {
         //grafo.Dijkstra(0, 25);
 
         // Para o outro tenho que mostrar o inverso do dijkstra
-        //grafo.DijkstraMaiorCaminho(0, 44);
+        //grafo.DijkstraMaiorCaminho(0, 400);
 
         //grafo.buscaProfundidade(44, 0, caminho);
         //grafo.buscaLargura(0, 40, caminho);
