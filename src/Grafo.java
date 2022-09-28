@@ -459,17 +459,23 @@ public class Grafo {
 	}
 
 	public void saltos(int origem, int pulos, ArrayList<Integer> listaSaltos, ArrayList<Integer> visitados){
-		int[] adj = adjacentesInt(origem); // pegar as adjacentes da origem
+        // pegar as adjacentes da origem
+		int[] adj = adjacentesInt(origem);
 
-		if(!visitados.contains(origem)){ // verifica se a origem ja foi adicionada nos visitados
+        // verifica se a origem ja foi adicionada nos visitados
+		if(!visitados.contains(origem)){
 			visitados.add(origem);
 		}
 
-		if(pulos == 1){  // criterio para adicionar um numero nos listas saltos
-			for(int i : adj){ // passar pelas adjacencias da origem
-				if(i == -1){ // checar se acabaram as adjacentes
+        // criterio para adicionar um numero nos listas saltos
+		if(pulos == 1){
+            // passar pelas adjacencias da origem
+			for(int i : adj){
+                // checar se acabaram as adjacentes
+				if(i == -1){
 					break;
-				}else if(!listaSaltos.contains(i) && !visitados.contains(i)){ // adiciona a adjacência na lista
+                    // adiciona a adjacência na lista
+				}else if(!listaSaltos.contains(i) && !visitados.contains(i)){
 					listaSaltos.add(i);
 				}
 			}
@@ -480,7 +486,8 @@ public class Grafo {
 					break;
 				}
 				if(!visitados.contains(i)){
-					saltos(i, pulos - 1, listaSaltos, visitados); // chama recursivamente subtraindo 1 valor do pulo
+                    // chama recursivamente subtraindo 1 valor do pulo
+					saltos(i, pulos - 1, listaSaltos, visitados);
 				}
 			}
 		}
@@ -502,17 +509,22 @@ public class Grafo {
             if (i == 0) {
                 break;
             }
-			System.out.println(listaVertices.get(i).dado + ": " + listaVertices.get(i).email + " "); // printa o email do indíce
+            // printa o email do indíce
+			System.out.println(listaVertices.get(i).dado + ": " + listaVertices.get(i).email + " ");
 		}
         
 	}
 
     public void saltosDistancia(int origem, int pulos, ArrayList<Integer> listaSaltos, int distancia){
-		int[] adj = adjacentesInt(origem); // pegar as adjacentes da origem
+        // pegar as adjacentes da origem
+        int[] adj = adjacentesInt(origem);
 
-		if(pulos == 1){  // criterio para adicionar um numero nos listas saltos
-			for(int i : adj){ // passar pelas adjacencias da origem
-				if(i == -1 ){ // checar se acabaram as adjacentes
+        // criterio para adicionar um numero nos listas saltos
+		if(pulos == 1){
+            // passar pelas adjacencias da origem
+			for(int i : adj){
+                // checar se acabaram as adjacentes
+				if(i == -1 ){
 					break;
 				}else {
 					listaSaltos.add(i);
@@ -664,7 +676,6 @@ public class Grafo {
         }
     }
 
-    // Falta fazer o menor caminho entre dois pontos
     /**
      * Implementação do algortimo Dijkstra que encontra o maior caminho.
      * @param x Vertice x.
