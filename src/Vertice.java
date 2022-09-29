@@ -11,17 +11,6 @@ public class Vertice {
         this.dado = valor;
         this.email = email;
 
-    //---------------------------Ignore-------------------------------
-    //|    AdjacenciaEntrada = new ArrayList<Adjacencia>();           |
-    //|    AdjacenciaSaida = new ArrayList<Adjacencia>();             |
+
     }
-
-    //|public void adicionarAdjacenciaEntrada(Adjacencia Adjacencia){ |
-    //|    AdjacenciaEntrada.add(Adjacencia);                         |
-    //|}
-
-    //|public void adicionarAdjacenciaSaida(Adjacencia Adjacencia){   |
-    //|    AdjacenciaSaida.add(Adjacencia);                           |
-    //|}                                                              |
-    //---------------------------Ignore-------------------------------
 }

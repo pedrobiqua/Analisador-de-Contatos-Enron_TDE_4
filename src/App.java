@@ -12,7 +12,7 @@ public class App {
     static Grafo grafo = new Grafo(0);
 
     public static void main(String[] args) throws Exception {
-        System.out.println("TDE 4 - Projeyo Colaborativo");
+        System.out.println("TDE 4 - Projeto Colaborativo");
 
         // Para ler arquivos
         Path path = FileSystems.getDefault().getPath("");
@@ -61,6 +61,7 @@ public class App {
 
         Grafo grafoTeste = new Grafo(0);
 
+        // Grafo usado para teste de metodos usados.
         grafoTeste.cria_Vertice(0, "aaaaaa");
         grafoTeste.cria_Vertice(1, "aaaaaa");
         grafoTeste.cria_Vertice(2, "aaaaaa");
@@ -81,7 +82,7 @@ public class App {
         grafoTeste.distanciaXY(0, caminho, 2);
         //grafoTeste.NumeroDeArestasDoGrafo();
         //a. (0.25 ponto) O n. de vértices do grafo.
-        //grafo.NumeroDeVerticesDoGrafo();
+        grafo.NumeroDeVerticesDoGrafo();
 
         // b. (0.25 ponto) O n. de arestas do grafo.
         //grafo.NumeroDeArestasDoGrafo();

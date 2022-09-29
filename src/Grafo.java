@@ -23,7 +23,6 @@ public class Grafo {
      * Lista encadeada de adjacências.
      */
     public Lista adjacencias[];
-    public ArrayList<Lista> adjacenciasList;
 
     /**
      * Matriz adjacência, onde convertemos a lista de adjacências para uma matriz de pesos.
@@ -55,7 +54,6 @@ public class Grafo {
 
         this.tamanho = tamanho;
         listaVertices = new ArrayList<Vertice>();
-        adjacenciasList = new ArrayList<Lista>();
         listaGrausSaida = new ArrayList<Integer>();
         listaGrausEntrada = new ArrayList<Integer>();
         adjacencias = new Lista[tamanho];
@@ -76,7 +74,6 @@ public class Grafo {
      */
     public void cria_Adj(int i, int j, String email, Double peso) {
         adjacencias[i].insere(j, email, peso);
-        adjacenciasList.add(new Lista());
         listaGrausSaida.set(i, listaGrausSaida.get(i) + 1);
         listaGrausEntrada.set(j, listaGrausEntrada.get(j) + 1);
     }
@@ -289,7 +286,6 @@ public class Grafo {
      * @return Retorna a lista de adjacências do vertice passado como parametro.
      */
     public Lista Adjacentes(int i) {
-        adjacenciasList.get(i);
         return adjacencias[i];
     }
 
@@ -433,6 +429,12 @@ public class Grafo {
 		}
 	}
 
+    /**
+     * Busca em largura
+     * @param atual
+     * @param destino
+     * @param caminho
+     */
     public void buscaLargura(int atual, int destino, ArrayList<Integer> caminho){
         // array para guardar os saltos
 		ArrayList<Integer> listaSaltos = new ArrayList<>();
@@ -458,6 +460,13 @@ public class Grafo {
 		}
 	}
 
+    /**
+     * Saltos do busca em largura
+     * @param origem
+     * @param pulos
+     * @param listaSaltos
+     * @param visitados
+     */
 	public void saltos(int origem, int pulos, ArrayList<Integer> listaSaltos, ArrayList<Integer> visitados){
         // pegar as adjacentes da origem
 		int[] adj = adjacentesInt(origem);
@@ -493,6 +502,12 @@ public class Grafo {
 		}
 	}
 
+    /**
+     * Distância de um ponto X a Y de acordo com uma distancia passada como parâmetro
+     * @param atual
+     * @param caminho
+     * @param alcance
+     */
     public void distanciaXY(int atual, ArrayList<Integer> caminho, int alcance){
         // array para guardar os saltos
 		ArrayList<Integer> listaSaltos = new ArrayList<>();
@@ -515,6 +530,13 @@ public class Grafo {
         
 	}
 
+    /**
+     * Saltos usado para o metódo
+     * @param origem
+     * @param pulos
+     * @param listaSaltos
+     * @param distancia
+     */
     public void saltosDistancia(int origem, int pulos, ArrayList<Integer> listaSaltos, int distancia){
         // pegar as adjacentes da origem
         int[] adj = adjacentesInt(origem);
@@ -636,6 +658,12 @@ public class Grafo {
         }
     }
 
+    /**
+     * Verifica se o vertice já foi visitado ou não
+     * @param visitados Array de visitados
+     * @param verticeAnalisado Vertice a ser analisado
+     * @return
+     */
     public boolean verificaVisitado(ArrayList<Integer> visitados, int verticeAnalisado) {
         for (int i = 0; i < visitados.size(); i++) {
             if (visitados.get(i) == verticeAnalisado) {
